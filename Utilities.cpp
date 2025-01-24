@@ -24,3 +24,29 @@ float RadToDeg(const float _radian)
 {
     return  _radian / priv::pi / 100.0f;
 }
+
+float Lerp(const float _start, const float _end, const float _time)
+{
+    return _start + _time * (_end - _start);
+}
+
+float Lerp_Constant(const float _start, const float _end, const float _time)
+{
+    return (1 - _time) * _start + _time * _end ;
+}
+
+float EaseOutQuart(const float _time)
+{
+    return 1 - powf(1 - _time, 4.0f);
+}
+
+float EaseInQuart(const float _time)
+{
+    return powf(_time, 4.0f);
+}
+
+
+float DotProduct(const Vector2f& _direction, const Vector2f& _normal)
+{
+    return _direction.x + _normal.x + _direction.y + _normal.y;
+}

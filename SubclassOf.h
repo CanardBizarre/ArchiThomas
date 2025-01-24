@@ -1,29 +1,29 @@
 #pragma once
 #include "Macro.h"
 
-template <typename T>
+template <typename Type>
 class SubclassOf
 {
-	T* objectRef;
+	Type* objectRef;
 
 public:
-	FORCEINLINE T GetObject() const
+	FORCEINLINE Type GetObject() const
 	{
 		return *objectRef;
 	}
 
 public:
-	SubclassOf(const T& _objectRef)
+	SubclassOf(const Type& _objectRef)
 	{
-		objectRef = new T(_objectRef);
+		objectRef = new Type(_objectRef);
 	}
-	SubclassOf(const T* _objectRef)
+	SubclassOf(const Type* _objectRef)
 	{
-		objectRef = new T(*_objectRef);
+		objectRef = new Type(*_objectRef);
 	}
-	SubclassOf(const SubclassOf<T>& _other)
+	SubclassOf(const SubclassOf<Type>& _other)
 	{
-		objectRef = new T(*_other.objectRef);
+		objectRef = new Type(*_other.objectRef);
 	}
 	~SubclassOf()
 	{

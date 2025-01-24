@@ -1,42 +1,59 @@
 #include "DuckHuntGame.h"
 #include "Level.h"
 #include "TimerManager.h"
+#include "CircleActor.h"
+#include "CameraManager.h"
+#include "Ball.h"
+
 
 DuckHuntGame::DuckHuntGame() : Game()
 {
-	//background = new MeshActor();
-	duck = nullptr;
+	
 }
 
 DuckHuntGame::~DuckHuntGame()
 {
-	delete background;
+	
 }
 
 
 void DuckHuntGame::Start()
 {
 	Super::Start();
-
-	//Level::SpawnActor(MeshActor(Vector2f(463.0f, 260.0f) * 2.0f, "background", JPG));
-	Level::SpawnActor(MeshActor(Vector2f(50.0f, 50.0f), "duck"));
-
-	/*new Timer([&]() 
-		{
-			Level::SpawnActor(MeshActor(Vector2f(50.0f, 50.0f), "duck"));
-		},
-		seconds(1.0f),
-		true,
-		true
-	);*/
-
 	LOG(Display, "DuckHuntGame::Start");
+
+
+	const float _x = window.getSize().y * 0.2f;
+	floor = Level::SpawnActor(MeshActor(Vector2f(window.getSize().x, window.getSize().y * 0.2f)));
+	const float _posX = 0.0f;
+	const float _posY = window.getSize().y * 0.8f;
+	floor->SetPosition({ _posX , _posY });
+	
+
+	ball = Level::SpawnActor(Ball(50.0f));
+	ball->SetOriginAtMiddle();
+	ball->SetPosition(Vector2f(window.getSize()) / 2.0f);
+
+	
+
+
 }
 
-void DuckHuntGame::Update()
+bool DuckHuntGame::Update()
 {
 	Super::Update();
-	LOG(Display, "DuckHuntGame::Update");
+	Shape* _ballShape = ball->GetMesh()->GetShape()->GetDrawable();
+	const FloatRect& _ballRect = _ballShape->getGlobalBounds();
+
+	Shape* _floorShape = floor->GetMesh()->GetShape()->GetDrawable();
+	const FloatRect& _floorRect = _floorShape->getGlobalBounds();
+	
+	if (_ballRect.findIntersection(_floorRect))
+	{
+		ball->ApplyBounce();
+	}
+	
+	return IsOver();
 }
 
 void DuckHuntGame::Stop()
@@ -46,9 +63,14 @@ void DuckHuntGame::Stop()
 }
 
 
-void DuckHuntGame::Launch()
+
+Duck* DuckHuntGame::RetrieveFirstDuck()
 {
-	Start();
-	Update();
-	Stop();
+	if (duckList.empty()) return nullptr;
+
+	const vector<Duck*>::iterator& _it = duckList.begin();
+	Duck* _duck = *_it;
+	duckList.erase(_it);
+
+	return _duck;
 }

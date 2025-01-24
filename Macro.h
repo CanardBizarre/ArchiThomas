@@ -47,6 +47,7 @@
 #define CAST(_type, _expr) static_cast<_type>(_expr)
 #define SLEEP(_duration) sleep(_duration)
 #define NO_DISCARD _NODISCARD
+#define IS_BASE_OF(_base, _type) typename = enable_if_t<is_base_of_v<_base, _type>>
 
 using namespace std;
 using namespace sf;

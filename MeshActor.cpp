@@ -1,5 +1,5 @@
 #include "MeshActor.h"
-#include "Game.h"
+#include "CameraManager.h"
 
 MeshActor::MeshActor(const float _radius, const size_t& _pointCount, const string& _path,
 					 const IntRect& _rect, const string& _name, const u_int& _lifeSpand) : Actor(_name, _lifeSpand)
@@ -24,13 +24,13 @@ MeshActor::MeshActor(const MeshActor& _other) : Actor(_other)
 void MeshActor::Construct()
 {
 	Super::Construct();
-	renderMeshToken = M_GAME.BindOnRenderWindow(bind(&MeshActor::RenderMesh, this, placeholders::_1));
+	renderMeshToken = M_CAMERA.BindOnRenderWindow(bind(&MeshActor::RenderMesh, this, placeholders::_1));
 }
 
 void MeshActor::Deconstruct()
 {
 	Super::Deconstruct();
-	M_GAME.UnbindOnRenderWindow(renderMeshToken);
+	M_CAMERA.UnbindOnRenderWindow(renderMeshToken);
 }
 
 void MeshActor::RenderMesh(RenderWindow& _window)

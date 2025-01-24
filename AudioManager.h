@@ -29,8 +29,8 @@ public:
 	AudioManager();
 	~AudioManager();
 
-	template <typename T, typename = enable_if_t<is_base_of_v<Sample, T>>>
-	T* PlaySample(const string& _path, const AudioExtensionType& _type = MP3, const Time& _time = Time())
+	template <typename Type, IS_BASE_OF(Sample, Type)>
+	Type* PlaySample(const string& _path, const AudioExtensionType& _type = MP3, const Time& _time = Time())
 	{
 		//static_assert(is_base_of_v<Sample, T>, "ERREUR CUSTOM !");
 
@@ -46,14 +46,14 @@ public:
 			if (_sample->IsAvailable())
 			{
 				_sample->Play(_time);
-				return Cast<Sample, T>(_sample);
+				return Cast<Type>(_sample);
 			}
 		}
 
-		_sample = new T(_finalPath);
+		_sample = new Type(_finalPath);
 		_sample->Play(_time);
 
-		return Cast<Sample, T>(_sample);
+		return Cast<Type>(_sample);
 	}
 	void ToggleMute();
 };
