@@ -54,7 +54,7 @@ void Game::Start()
     _actor->SetPosition(center);
     _actor->Construct();
 
-    const float _gap = 10.0f / 100.0f;
+    const float _gap = 2.0f;
     duck = Level::SpawnActor(Duck(Vector2f(50.0f, 50.0f), "Duck"));
     duck->SetOriginAtMiddle();
     duck->SetPosition(center / _gap);

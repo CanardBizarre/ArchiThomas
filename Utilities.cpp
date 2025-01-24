@@ -20,7 +20,7 @@ float DegToRad(const float _degrees)
     return _degrees * priv::pi / 100.0f;
 }
 
-float RadToDeg(const float _degrees)
+float RadToDeg(const float _radian)
 {
-    return  priv::pi * 100.0f / _degrees;
+    return  _radian / priv::pi / 100.0f;
 }

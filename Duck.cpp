@@ -2,18 +2,17 @@
 #include "TimerManager.h"
 #include "Level.h"
 #include "AudioManager.h"
+#include "Cloud.h"
 
 Duck::Duck(const Vector2f& _size, const string& _path, const IntRect& _rect) : MeshActor(_size, _path, PNG, _rect, "Duck")
 {
-	lifeSpan = 2.0f;
-	movement = CreateComponent<MovementComponent>();
+	movement = CreateComponent<MovementComponent>(vector<MovementType>({ MT_ROTATEAROUND}));
 	animation = CreateComponent<AnimationComponent>();
 
 }
 
 Duck::Duck(const Duck& _other) : MeshActor(_other)
 {
-	lifeSpan = _other.lifeSpan;
 	movement = CreateComponent<MovementComponent>(_other.movement);
 	animation = CreateComponent<AnimationComponent>();
 }
@@ -60,7 +59,27 @@ void Duck::Deconstruct()
 
 void Duck::BeginPlay()
 {
-	Super::BeginPlay();
+	new Timer([&]()
+		    {
+			Cloud* _cloud = Level::SpawnActor(Cloud(Vector2f(50.0f, 50.0f), "Cloud"));
+			_cloud->SetOriginAtMiddle();
+			_cloud->SetPosition(this->GetPosition());
+			_cloud->GetMovement()->SetTarget(this);
+			movement->SetRotateSpeed(50.0f);
 
-	new Timer([&]() { Destroy(); }, seconds(lifeSpan), true);
+			new Timer([&]()
+				{
+					movement->SetRotateSpeed(30.0f);
+				},
+				seconds(2.0f),
+				true,
+				false
+			);
+		    },
+		    seconds(5.0f),
+		    true,
+		    true
+		);
+
+
 }
