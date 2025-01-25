@@ -15,12 +15,12 @@ PinballGame::~PinballGame()
 void PinballGame::Start()
 {
 	Super::Start();
-	ball = Level::SpawnActor(Ball(50.0f));
+	ball = Level::SpawnActor(Ball(25.0f));
 	ball->SetOriginAtMiddle();
-	ball->SetPosition(Vector2f(window.getSize()) / 2.0f);
-
-	ball->SetAngle(370.0f);
-	ball->SetForce(250.0f);
+	ball->SetPosition(Vector2f(window.getSize().x * 0.10f, window.getSize().y * 0.70f));
+	
+	ball->SetAngle(320.0f);
+	ball->SetForce(50.0f);
 	M_INPUT.BindAction(Code::Space, [&]() { ball->Launch(); });
 }
 

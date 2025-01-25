@@ -37,7 +37,7 @@ float Lerp_Constant(const float _start, const float _end, const float _time)
 
 float ComputeKinematicEquation(const float _accelaration, const float _velocity, const float _position, const float _time)
 {
-    return 0.5f * _accelaration * CAST(float,pow(_time, 2)) + _velocity * _time + _position;
+    return 0.5f * _accelaration *  _time * _time + _velocity * _time + _position;
 }
 
 float EaseOutQuart(const float _time)
