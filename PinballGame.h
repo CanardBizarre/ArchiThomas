@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "MeshActor.h"
 
-struct Flipper;
+class Flipper;
 
 class PinballGame : public Game
 {

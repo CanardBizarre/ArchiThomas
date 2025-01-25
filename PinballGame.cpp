@@ -28,13 +28,15 @@ void PinballGame::Start()
 		flippers[_index]->SetOriginAtMiddle();
 		if (_index == 0)
 		{
-			flippers[_index]->SetPosition(Vector2f(_position.x, _position.y + 250));
+			flippers[_index]->SetPosition(Vector2f(_position.x + 10, _position.y + 250));
 		}
 		else
 		{
-			flippers[_index]->SetPosition(Vector2f(_position.x - 125, _position.y + 250));
+			flippers[_index]->SetPosition(Vector2f(_position.x - 120, _position.y + 250));
 		}
 	}
+
+
 }
 
 bool PinballGame::Update()
