@@ -1,7 +1,5 @@
 #include "InputManager.h"
 
-
-
 void  MyInput::InputManager::ConsumeData(RenderWindow& _window)
 {
     while (const optional _event = _window.pollEvent())

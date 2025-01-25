@@ -37,7 +37,6 @@ void Ball::Tick(const float _deltaTime)
 			bounceDirection *= EaseOutQuart(1.0f);
 		}
 
-
 		// Result
 		const Vector2f& _offset = _directionOffset + bounceDirection + _fallOffset;
 		fallMovement += _fallOffset * _deltaTime;

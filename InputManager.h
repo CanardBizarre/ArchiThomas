@@ -50,5 +50,3 @@ namespace MyInput
 	};
 }
 using namespace MyInput;
-
-
