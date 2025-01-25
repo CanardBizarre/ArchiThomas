@@ -48,10 +48,6 @@ bool DuckHuntGame::Update()
 	Shape* _floorShape = floor->GetMesh()->GetShape()->GetDrawable();
 	const FloatRect& _floorRect = _floorShape->getGlobalBounds();
 	
-	if (_ballRect.findIntersection(_floorRect))
-	{
-		ball->ApplyBounce();
-	}
 	
 	return IsOver();
 }

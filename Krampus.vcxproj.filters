@@ -118,6 +118,15 @@
     <Filter Include="Scripts\Managers\InputManager">
       <UniqueIdentifier>{c06e050d-c621-4696-852b-bb7184ee40ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Core\Components\Movement">
+      <UniqueIdentifier>{24facb6a-9c62-4392-88d7-96dd9070e4ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pinball">
+      <UniqueIdentifier>{bf35a842-684b-4e75-867a-098ba8a162a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Core\Components\Movement\Kinetic">
+      <UniqueIdentifier>{7a9ce1c7-6a2f-4740-a255-6d22ecd10e29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TextObject.cpp">
@@ -195,9 +204,6 @@
     <ClCompile Include="MusicSample.cpp">
       <Filter>Scripts\Managers\Audio\Samples\Music</Filter>
     </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>DuckHunt</Filter>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>DuckHunt</Filter>
     </ClCompile>
@@ -225,9 +231,6 @@
     <ClCompile Include="TriangleActor.cpp">
       <Filter>Scripts\Core\Actors\Shapes\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>DuckHunt</Filter>
-    </ClCompile>
     <ClCompile Include="CameraActor.cpp">
       <Filter>Scripts\Core\Actors\Camera</Filter>
     </ClCompile>
@@ -245,6 +248,18 @@
     </ClCompile>
     <ClCompile Include="Cloud.cpp">
       <Filter>DuckHunt</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballGame.cpp">
+      <Filter>Pinball</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Scripts\Core\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Pinball</Filter>
+    </ClCompile>
+    <ClCompile Include="KinecticComponent.cpp">
+      <Filter>Scripts\Core\Components\Movement\Kinetic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -338,9 +353,6 @@
     <ClInclude Include="DuckHuntGame.h">
       <Filter>DuckHunt</Filter>
     </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>DuckHunt</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Scripts\Core\Components\Animation</Filter>
     </ClInclude>
@@ -374,9 +386,6 @@
     <ClInclude Include="SubclassOf.h">
       <Filter>Scripts\Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>DuckHunt</Filter>
-    </ClInclude>
     <ClInclude Include="CameraActor.h">
       <Filter>Scripts\Core\Actors\Camera</Filter>
     </ClInclude>
@@ -394,6 +403,18 @@
     </ClInclude>
     <ClInclude Include="Cloud.h">
       <Filter>DuckHunt</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballGame.h">
+      <Filter>Pinball</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Scripts\Core\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Pinball</Filter>
+    </ClInclude>
+    <ClInclude Include="KinecticComponent.h">
+      <Filter>Scripts\Core\Components\Movement\Kinetic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ float RadToDeg(const float _degrees);
 
 float Lerp(const float _start, const float _end, const float _time);
 float Lerp_Constant(const float _start, const float _end, const float _time);
+float ComputeKinematicEquation(const float _accelaration, const float _velocity,const float _position, const float _time);
 float EaseOutQuart(const float _time);
 float EaseInQuart(const float _time);
 

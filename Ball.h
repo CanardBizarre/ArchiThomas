@@ -1,44 +1,33 @@
 #pragma once
 #include "MeshActor.h"
+#include "KinecticComponent.h"
 class Ball : public MeshActor
 {
-	// Movement
-	bool canMove;
-	float moveSpeed;
-	Vector2f direction;
+	KinecticComponent* movement;
 
-	//Fall
-	float gravity;
-	float mass;
-
-	float bounceDuration;
-	Vector2f bounceDirection;
-
-	Vector2f fallMovement;
 public:
-	FORCEINLINE void SetCanMove(const bool _status)
+	FORCEINLINE KinecticComponent* GetMovement()
 	{
-		canMove = _status;
+		return movement;
 	}
-	FORCEINLINE void SetDirection(const Vector2f _direction)
+	FORCEINLINE void Launch()
 	{
-		bounceDirection = _direction;
+		movement->Lauch();
 	}
-	FORCEINLINE Vector2f GetDirection()const 
+
+	FORCEINLINE void SetForce(const float _force)
 	{
-		return fallMovement;
+		movement->SetPower(_force);
 	}
-	FORCEINLINE void ApplyBounce()
+	FORCEINLINE void SetAngle(const float _angle)
 	{
-		const Vector2f _normal = Vector2f(0.0f, -1.0f);
-		bounceDirection = ComputeRebound(fallMovement, _normal, 0.8f)/* * gravity * mass*/;
-		fallMovement = Vector2f();
+		movement->SetAngle(_angle);
 	}
+
 public:
 	Ball(const float _radius);
+	Ball(const Ball& _other);
 
-private:
-	Vector2f ComputeRebound(const Vector2f& _direction, const Vector2f& _normal, float _restitution);
 public:
 	virtual void Tick(const float _deltaTime)override;
 };
