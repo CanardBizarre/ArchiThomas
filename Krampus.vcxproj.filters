@@ -103,6 +103,21 @@
     <Filter Include="Scripts\Managers\Audio\Samples\Music">
       <UniqueIdentifier>{85485f9e-767e-4a95-833d-840f8602da7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Core\Actors\Camera">
+      <UniqueIdentifier>{39c77d38-dfa6-438e-8b7b-41149c5baf67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Core\Components\Camera">
+      <UniqueIdentifier>{5237ea9b-9227-4e41-92bd-ae85231b4f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Managers\Camera">
+      <UniqueIdentifier>{57b13df8-a4eb-4288-ba37-9e9d2c1f0763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Managers\Game">
+      <UniqueIdentifier>{b13499b4-8625-4ee5-a816-c3f9a0bebdcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Managers\InputManager">
+      <UniqueIdentifier>{c06e050d-c621-4696-852b-bb7184ee40ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TextObject.cpp">
@@ -210,14 +225,26 @@
     <ClCompile Include="TriangleActor.cpp">
       <Filter>Scripts\Core\Actors\Shapes\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Ball.cpp">
+      <Filter>DuckHunt</Filter>
     </ClCompile>
     <ClCompile Include="CameraActor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scripts\Core\Actors\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Scripts\Core\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Scripts\Managers\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Scripts\Managers\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Scripts\Managers\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="Cloud.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>DuckHunt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -347,14 +374,26 @@
     <ClInclude Include="SubclassOf.h">
       <Filter>Scripts\Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraComponent.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Ball.h">
+      <Filter>DuckHunt</Filter>
     </ClInclude>
     <ClInclude Include="CameraActor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Scripts\Core\Actors\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Scripts\Core\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Scripts\Managers\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Scripts\Managers\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Scripts\Managers\InputManager</Filter>
     </ClInclude>
     <ClInclude Include="Cloud.h">
-      <Filter>Header Files</Filter>
+      <Filter>DuckHunt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

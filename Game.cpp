@@ -3,6 +3,7 @@
 #include "TimerManager.h"
 #include "AudioManager.h"
 #include "CameraManager.h"
+#include "InputManager.h"
 
 Game::Game()
 {
@@ -24,20 +25,10 @@ bool Game::Update()
     TM_Seconds& _timer = M_TIMER;
     _timer.Update();
 
-    while (const optional _event = window.pollEvent())
-    {
-        if (_event->is<Event::Closed>())
-        {
-            window.close();
-        }
-    }
+    M_INPUT.ConsumeData(window);
+
     const float _deltaTime = _timer.GetDeltaTime().asSeconds();
     M_ACTOR.Tick(_deltaTime);
-
-    static float _t = _deltaTime;
-
-    float _value = Lerp(0.0f,100.0f, _t);
-    _t += _deltaTime;
 
     return IsOver();
 }
