@@ -10,9 +10,10 @@ class Ball : public MeshActor
 	//Fall
 	float gravity;
 	float mass;
+	Vector2f offset;
+	float time;
 
-	float bounceDuration;
-	Vector2f bounceDirection;
+	Vector2f bounceOffset;
 
 	Vector2f fallMovement;
 public:
@@ -22,7 +23,7 @@ public:
 	}
 	FORCEINLINE void SetDirection(const Vector2f _direction)
 	{
-		bounceDirection = _direction;
+		bounceOffset = _direction;
 	}
 	FORCEINLINE Vector2f GetDirection()const 
 	{
@@ -30,9 +31,12 @@ public:
 	}
 	FORCEINLINE void ApplyBounce()
 	{
+		// Bounce
 		const Vector2f _normal = Vector2f(0.0f, -1.0f);
-		bounceDirection = ComputeRebound(fallMovement, _normal, 0.8f)/* * gravity * mass*/;
+		Move(Vector2f(_normal));
+		bounceOffset = ComputeRebound(bounceOffset, _normal, 0.8f);
 		fallMovement = Vector2f();
+		time = 0.0f;
 	}
 public:
 	Ball(const float _radius);
@@ -41,5 +45,6 @@ private:
 	Vector2f ComputeRebound(const Vector2f& _direction, const Vector2f& _normal, float _restitution);
 public:
 	virtual void Tick(const float _deltaTime)override;
+	void DEBUG();
 };
 

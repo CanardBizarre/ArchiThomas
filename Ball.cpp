@@ -4,14 +4,13 @@ Ball::Ball(const float _radius) : MeshActor(_radius, 30, "PopCat")
 {
 	// Movement
 	canMove = true;
-	moveSpeed = 5.0f;
+	moveSpeed = 1.0f;
 
 	// Fall
-	mass = 20.0f;
+	time = 0;
+	mass = 200.0f;
 	gravity = 9.81f;
-	direction = Vector2f();
-	bounceDuration = 0.5f;
-	EaseOutQuart(bounceDuration);
+	direction = Vector2f(1.0f,1.0f);
 	fallMovement = Vector2f();
 }
 
@@ -22,28 +21,37 @@ void Ball::Tick(const float _deltaTime)
 	
 	if (canMove)
 	{
-		// Direciton
-		const Vector2f& _directionOffset = direction * moveSpeed * 100.0f;
 
-		// Fall
-		const Vector2f _downVector = Vector2f(0.0f, 1.0f);
-		const Vector2f _fallOffset = _downVector * gravity * mass;
+		//// Direction
+		//Vector2f _directionOffset = direction * moveSpeed * 100.0f;
 
-		// Bounce
-		if (bounceDuration != 0.0f)
-		{
-			bounceDuration -= _deltaTime;
-			bounceDuration = bounceDuration < 0.0f ? 0.0f : bounceDuration;
-			bounceDirection *= EaseOutQuart(1.0f);
-		}
+		//// Fall
+		//const Vector2f& _downVector = Vector2f(0.0f, 1.0f);
+		//const Vector2f& _fallOffset = _downVector * gravity * mass;
+		//
+		//time += _deltaTime;
+		////bounceOffset *= EaseOutQuart(0.5f);
 
-
-		// Result
-		const Vector2f& _offset = _directionOffset + bounceDirection + _fallOffset;
-		fallMovement += _fallOffset * _deltaTime;
-		Move(_offset * _deltaTime);
+		//// Result
+		//offset = (_directionOffset + _fallOffset + bounceOffset) * _deltaTime;
+		//fallMovement += _fallOffset * _deltaTime;
+		//
+		//Move(offset);
+		
+		Vector2f _directionOffset = direction * moveSpeed * 100.0f;
+		const Vector2f& _fallOffset = Vector2f(0.0f, 1.0f) * gravity * mass;
+		bounceOffset += (_directionOffset + _fallOffset) * _deltaTime;
+		const Vector2f& _offset = bounceOffset * _deltaTime;
+		Move(_offset);
 	}
-	
+}
+
+void Ball::DEBUG()
+{
+	//LOG(Warning, direction);
+	LOG(Error, bounceOffset);
+	//LOG(Display, fallMovement);
+	//LOG(Error, offset);
 }
 
 Vector2f Ball::ComputeRebound(const Vector2f& _direction, const Vector2f& _normal, float _restitution)

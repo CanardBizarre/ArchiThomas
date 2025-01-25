@@ -23,16 +23,15 @@ void DuckHuntGame::Start()
 	LOG(Display, "DuckHuntGame::Start");
 
 
-	const float _x = window.getSize().y * 0.2f;
-	floor = Level::SpawnActor(MeshActor(Vector2f(window.getSize().x, window.getSize().y * 0.2f)));
+	floor = Level::SpawnActor(MeshActor(Vector2f(window.getSize().x * 2, window.getSize().y * 0.05f)));
 	const float _posX = 0.0f;
-	const float _posY = window.getSize().y * 0.8f;
+	const float _posY = window.getSize().y * 0.99f;
 	floor->SetPosition({ _posX , _posY });
 	
 
-	ball = Level::SpawnActor(Ball(50.0f));
+	ball = Level::SpawnActor(Ball(10.0f));
 	ball->SetOriginAtMiddle();
-	ball->SetPosition(Vector2f(window.getSize()) / 2.0f);
+	ball->SetPosition(Vector2f(window.getSize().x / 2.0f, 0.0f));
 
 	
 
@@ -51,8 +50,9 @@ bool DuckHuntGame::Update()
 	if (_ballRect.findIntersection(_floorRect))
 	{
 		ball->ApplyBounce();
+		ball->DEBUG();
 	}
-	
+	//ball->DEBUG();
 	return IsOver();
 }
 
