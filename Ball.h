@@ -1,50 +1,23 @@
 #pragma once
 #include "MeshActor.h"
+#include "PhysicComponent.h"
 class Ball : public MeshActor
 {
-	// Movement
-	bool canMove;
-	float moveSpeed;
-	Vector2f direction;
-
-	//Fall
-	float gravity;
-	float mass;
-	Vector2f offset;
-	float time;
-
-	Vector2f bounceOffset;
-
-	Vector2f fallMovement;
+	PhysicComponent* physic;
 public:
-	FORCEINLINE void SetCanMove(const bool _status)
+	FORCEINLINE PhysicComponent* GetPhysic() const
 	{
-		canMove = _status;
-	}
-	FORCEINLINE void SetDirection(const Vector2f _direction)
-	{
-		bounceOffset = _direction;
-	}
-	FORCEINLINE Vector2f GetDirection()const 
-	{
-		return fallMovement;
-	}
-	FORCEINLINE void ApplyBounce()
-	{
-		// Bounce
-		const Vector2f _normal = Vector2f(0.0f, -1.0f);
-		Move(Vector2f(_normal));
-		bounceOffset = ComputeRebound(bounceOffset, _normal, 0.8f);
-		fallMovement = Vector2f();
-		time = 0.0f;
+		if (!physic)
+		{
+			LOG(Warning, "PhysicComponent est nullptr");
+			return nullptr;
+		}
+		return physic;
 	}
 public:
 	Ball(const float _radius);
-
-private:
-	Vector2f ComputeRebound(const Vector2f& _direction, const Vector2f& _normal, float _restitution);
+	Ball(const Ball& _other);
 public:
-	virtual void Tick(const float _deltaTime)override;
-	void DEBUG();
+	virtual void Construct() override;
 };
 

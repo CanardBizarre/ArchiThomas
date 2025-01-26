@@ -4,6 +4,11 @@
 
 class Level
 {
+
+
+public:
+	Level();
+
 public:
 	template <typename Type = Actor>
 	static Type* SpawnActor()
@@ -27,7 +32,6 @@ public:
 		_actor->Construct();
 		return _actor;
 	}
-
 
 	// TODO move to PlayerController
 	//static void SetViewTarget()

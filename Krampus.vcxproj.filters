@@ -246,6 +246,9 @@
     <ClCompile Include="Cloud.cpp">
       <Filter>DuckHunt</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -394,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="Cloud.h">
       <Filter>DuckHunt</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

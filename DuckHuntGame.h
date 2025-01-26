@@ -22,7 +22,6 @@ class DuckHuntGame : public Game
 
 	class Ball* ball;
 	class MeshActor* floor;
-
 public:
 	DuckHuntGame();
 	virtual ~DuckHuntGame();
