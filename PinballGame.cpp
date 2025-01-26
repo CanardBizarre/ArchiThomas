@@ -5,15 +5,23 @@
 #include "Label.h"
 #include "MusicSample.h"
 #include "AudioManager.h"
+#include "CameraManager.h"
 
 PinballGame::PinballGame()
 {
-    
+    scoreLabel = nullptr;
+    score = 0;
+    background = nullptr;
+    gameBoard = nullptr;
+    plunger = nullptr;
+    flippers = vector<Flipper*>();
+    bounds = vector<MeshActor*>();
+    walls = vector<MeshActor*>();
 }
 
 PinballGame::~PinballGame()
 {
-    delete score;
+    delete scoreLabel;
 }
 
 void PinballGame::Start()
@@ -55,8 +63,8 @@ void PinballGame::Start()
     const Vector2f _gameBoardPosition(500.0f, 500.0f);
 
     const string& _labelText = "Score :";
-    score = new Label(_labelText, "Cheese_Market", OTF);
-    score->SetPosition(Vector2f(500 - _labelText.size(), 10));
+    scoreLabel = new Label(_labelText, "Cheese_Market", OTF);
+    scoreLabel->SetPosition(Vector2f(500 - _labelText.size(), 10));
     
     // Plateau de jeu
     gameBoard = _createActor(Vector2f(800, 900), "Pinball/Background", _gameBoardPosition);
@@ -113,11 +121,18 @@ void PinballGame::Start()
         _flipper->SetPosition(_flipperPosition);
         flippers.push_back(_flipper);
     }
+
+    CameraActor* _camera = new CameraActor({500.0f, 500.0f}, Vector2f({ 500.0f, 500.0f }));
+    M_CAMERA.Register(_camera);
+    M_CAMERA.SetCurrent(_camera);
+    //_camera->BeginPlay();
 }
 
 bool PinballGame::Update()
 {
 	Super::Update();
+    LOG(Display, "- Score : " + to_string(score));
+
 
 	return IsOver();
 }
