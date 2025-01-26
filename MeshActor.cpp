@@ -6,6 +6,7 @@ MeshActor::MeshActor(const float _radius, const size_t& _pointCount, const strin
 {
 	mesh = CreateComponent<MeshComponent>(_radius, _pointCount, _path, _rect);
 	renderMeshToken = -1;
+	size = Vector2f(_radius * 2.0f, _radius * 2.0f);
 }
 
 MeshActor::MeshActor(const Vector2f& _size, const string& _path, const TextureExtensionType& _textureType,
@@ -13,12 +14,14 @@ MeshActor::MeshActor(const Vector2f& _size, const string& _path, const TextureEx
 {
 	mesh = CreateComponent<MeshComponent>(_size, _path, _textureType, _rect);
 	renderMeshToken = -1;
+	size = _size;
 }
 
 MeshActor::MeshActor(const MeshActor& _other) : Actor(_other)
 {
 	mesh = CreateComponent<MeshComponent>(_other.mesh);
 	renderMeshToken = _other.renderMeshToken;
+	size = _other.size;
 }
 
 void MeshActor::Construct()
