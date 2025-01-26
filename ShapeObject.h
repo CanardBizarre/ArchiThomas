@@ -73,6 +73,16 @@ struct ShapeObjectData
 	ShapeObjectType type;
 	ObjectData data;
 
+
+	FORCEINLINE RectangleShapeData* GetRectangleData() 
+	{
+		return data.rectangleData;
+	}
+	FORCEINLINE CircleShapeData* GetCircleData()
+	{
+		return data.circleData;
+	}
+
 	ShapeObjectData()
 	{
 		type = SOT_COUNT;

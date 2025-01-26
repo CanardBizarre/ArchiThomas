@@ -16,7 +16,7 @@ Game::~Game()
 
 void Game::Start()
 {
-    window.create(VideoMode({1200, 1200}), "SFML works!");
+    window.create(VideoMode({1000, 1000}), "SFML works!");
 };
 
 bool Game::Update()
@@ -24,9 +24,7 @@ bool Game::Update()
 	
     TM_Seconds& _timer = M_TIMER;
     _timer.Update();
-
     M_INPUT.ConsumeData(window);
-
     const float _deltaTime = _timer.GetDeltaTime().asSeconds();
     M_ACTOR.Tick(_deltaTime);
 

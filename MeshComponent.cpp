@@ -5,6 +5,7 @@ MeshComponent::MeshComponent(Actor* _owner, const float _radius, const size_t& _
 						   : Component(_owner)
 {
 	shape = new ShapeObject(_radius, _path, _rect, _pointCount);
+	
 }
 
 MeshComponent::MeshComponent(Actor* _owner, const Vector2f& _size, const string& _path,

@@ -17,12 +17,16 @@ int GetRandomNumberInRange(const int _min, const int _max)
 
 float DegToRad(const float _degrees)
 {
-    return _degrees * priv::pi / 100.0f;
+    return _degrees * priv::pi / 180.0f;
 }
 
 float RadToDeg(const float _radian)
 {
-    return  _radian / priv::pi / 100.0f;
+    return  _radian / priv::pi / 180.0f;
+}
+float RadToDeg(const Angle& _radian)
+{
+    return 180.0f / priv::pi * _radian.asRadians();
 }
 
 float Lerp(const float _start, const float _end, const float _time)

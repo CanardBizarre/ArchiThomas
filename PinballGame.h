@@ -3,6 +3,7 @@
 class PinballGame : public Game
 {
 	class Ball* ball;
+	class RectangleActor* rectangle;
 
 public:
 	PinballGame();

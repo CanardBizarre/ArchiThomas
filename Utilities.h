@@ -7,6 +7,7 @@ int GetRandomNumberInRange(const int _min, const int _max);
 
 float DegToRad(const float _degrees);
 float RadToDeg(const float _degrees);
+float RadToDeg(const Angle& _radian);
 
 float Lerp(const float _start, const float _end, const float _time);
 float Lerp_Constant(const float _start, const float _end, const float _time);
