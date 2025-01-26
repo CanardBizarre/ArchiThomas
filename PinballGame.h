@@ -3,12 +3,14 @@
 #include "MeshActor.h"
 
 class Flipper;
+class Plunger;
 
 class PinballGame : public Game
 {
 	//Game background
 	MeshActor* background;
 	MeshActor* gameBoard;
+	Plunger* plunger;
 	//Balle du flipper
 	//Ball* ball;
 	//Flipper droit + gauche

@@ -172,6 +172,7 @@ xcopy /y /d "..\..\SFML-3.0.0\bin\sfml-window-d-3.dll" "$(OutDir)"
     <ClCompile Include="MusicSample.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PinballGame.cpp" />
+    <ClCompile Include="Plunger.cpp" />
     <ClCompile Include="RectangleActor.cpp" />
     <ClCompile Include="RootComponent.cpp" />
     <ClCompile Include="Sample.cpp" />
@@ -214,6 +215,7 @@ xcopy /y /d "..\..\SFML-3.0.0\bin\sfml-window-d-3.dll" "$(OutDir)"
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MusicSample.h" />
     <ClInclude Include="PinballGame.h" />
+    <ClInclude Include="Plunger.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="SubclassOf.h" />

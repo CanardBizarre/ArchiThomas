@@ -1,6 +1,8 @@
 #include "PinballGame.h"
 #include "Level.h"
 #include "Flipper.h"
+#include "Plunger.h"
+#include "Label.h"
 
 PinballGame::PinballGame()
 {
@@ -33,14 +35,22 @@ void PinballGame::Start()
     // Création des éléments
     const Vector2f _gameBoardPosition(500.0f, 500.0f);
 
+    const string& _labelText = "Score :";
+    Label* _text = new Label(_labelText, "Cheese_Market", OTF);
+    _text->SetPosition(Vector2f(500 - _labelText.size(), 10));
+    
     // Plateau de jeu
     gameBoard = _createActor(Vector2f(800, 900), "Pinball/Background", _gameBoardPosition);
+
+    plunger = Level::SpawnActor(Plunger(Vector2f(87.0f, 150.0f), "Pinball/Plunger"));
+    plunger->SetPosition(Vector2f(820.0f, 850.0f));
+
 
     // Murs
     vector<tuple<Vector2f, string, Vector2f, bool, float>> _wallData = 
     {
         {Vector2f(720, 200), "Pinball/Flipper_Bottom", Vector2f(100.0f, 750.0f), false, 0.0f},
-        {Vector2f(200, 60), "Pinball/Wall_1", Vector2f(650.0f, 715.0f), true, 0.0f},//
+        {Vector2f(200, 60), "Pinball/Wall_1", Vector2f(660.0f, 715.0f), true, 0.0f},//
         {Vector2f(200, 60), "Pinball/Wall_2", Vector2f(230.0f, 715.0f), true, 0.0f},//
         {Vector2f(60, 100), "Pinball/Blocker", Vector2f(280.0f, 250.0f), true, -30.0f},
         {Vector2f(60, 100), "Pinball/Blocker", Vector2f(650.0f, 250.0f), true, 30.0f}
@@ -70,11 +80,17 @@ void PinballGame::Start()
     // Flippers
     for (u_int _index = 0; _index < 2; ++_index) 
     {
-        Flipper* _flipper = Level::SpawnActor(Flipper(Vector2f(100, 50), "Pinball/Flipper_" + to_string(_index + 1)));
-        _flipper->SetOriginAtMiddle();
+        Flipper* _flipper = Level::SpawnActor(Flipper(Vector2f(100, 50), "Pinball/Flipper_" + to_string(_index + 1), _index == 1));
+        if (_index == 1) {
+            _flipper->SetOrigin(Vector2f(0, 25));  // Origine en haut à gauche pour le flipper de gauche
+        }
+        else {
+            _flipper->SetOrigin(Vector2f(100, 25)); // Origine en haut à droite pour le flipper de droite
+        }
+
         Vector2f _flipperPosition = (_index == 0)
-            ? Vector2f(_gameBoardPosition.x + 15, _gameBoardPosition.y + 250)
-            : Vector2f(_gameBoardPosition.x - 125, _gameBoardPosition.y + 250);
+            ? Vector2f(_gameBoardPosition.x + 70, _gameBoardPosition.y + 250)
+            : Vector2f(_gameBoardPosition.x - 180, _gameBoardPosition.y + 250);
         _flipper->SetPosition(_flipperPosition);
         flippers.push_back(_flipper);
     }
