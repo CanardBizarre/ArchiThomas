@@ -3,20 +3,39 @@
 #include "Flipper.h"
 #include "Plunger.h"
 #include "Label.h"
+#include "MusicSample.h"
+#include "AudioManager.h"
 
 PinballGame::PinballGame()
 {
-
+    
 }
 
 PinballGame::~PinballGame()
 {
-
+    delete score;
 }
 
 void PinballGame::Start()
 {
 	Super::Start();
+
+    const u_int& _result = GetRandomNumberInRange(0, 2);
+    switch (_result)
+    {
+    case 0:
+        M_AUDIO.PlaySample<MusicSample>("BackgroundEffect_1");
+        break;
+    case 1:
+        M_AUDIO.PlaySample<MusicSample>("BackgroundEffect_2");
+        break;
+    case 2:
+        M_AUDIO.PlaySample<MusicSample>("BackgroundEffect_3");
+        break;
+    default:
+        break;
+    }
+
     auto _createActor = [](const Vector2f& _size, const string& _texture, const Vector2f& _position, bool _useMiddleOrigin = true, float _rotation = 0.0f) 
     {
         MeshActor* _actor = Level::SpawnActor(MeshActor(_size, _texture));
@@ -36,8 +55,8 @@ void PinballGame::Start()
     const Vector2f _gameBoardPosition(500.0f, 500.0f);
 
     const string& _labelText = "Score :";
-    Label* _text = new Label(_labelText, "Cheese_Market", OTF);
-    _text->SetPosition(Vector2f(500 - _labelText.size(), 10));
+    score = new Label(_labelText, "Cheese_Market", OTF);
+    score->SetPosition(Vector2f(500 - _labelText.size(), 10));
     
     // Plateau de jeu
     gameBoard = _createActor(Vector2f(800, 900), "Pinball/Background", _gameBoardPosition);

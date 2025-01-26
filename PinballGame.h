@@ -4,9 +4,11 @@
 
 class Flipper;
 class Plunger;
+class Label;
 
 class PinballGame : public Game
 {
+	Label* score;
 	//Game background
 	MeshActor* background;
 	MeshActor* gameBoard;

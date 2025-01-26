@@ -2,7 +2,7 @@
 
 Sample::Sample(const string& _path)
 {
-	volume = 50.0f;
+	volume = 2.0f;
 	path = _path;
 }
 

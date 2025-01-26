@@ -1,6 +1,7 @@
 #include "Flipper.h"
 #include "InputManager.h"
 #include "TimerManager.h"
+#include "AudioManager.h"
 
 Flipper::Flipper(const Vector2f& _size, const string& _path, const bool _isLeftFlipper, const IntRect& _rect) : MeshActor(_size, _path, PNG, _rect, "Flipper")
 {
@@ -43,7 +44,25 @@ void Flipper::Deconstruct()
 void Flipper::ActiveFlipper()
 {
     const float _rotation = isLeftFlipper ? -30 : 30;
-    Rotate(degrees(_rotation));
+    SetRotation(degrees(_rotation));
+   
+    const u_int& _result = GetRandomNumberInRange(0, 2);
+    switch (_result)
+    {
+    case 0:
+        M_AUDIO.PlaySample<SoundSample>("FlipperHit_1");
+        break; 
+    case 1:
+        M_AUDIO.PlaySample<SoundSample>("FlipperHit_2");
+        break;
+    case 2:
+        M_AUDIO.PlaySample<SoundSample>("FlipperHit_3");
+        break;
+    default:
+        break;
+    }
+      
+    
 
     new Timer([&]() { SetRotation(degrees(0.0f)); }, seconds(0.1f), true, false);
 }
