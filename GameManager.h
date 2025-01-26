@@ -1,21 +1,19 @@
 #pragma once
 #include "Singleton.h"
 #include "Game.h"
-class GameManager :  public Singleton<GameManager>
+
+class GameManager : public Singleton<GameManager>
 {
-	Game* current;
+	Game* currentGame;
+
+public:
+	FORCEINLINE Game* GetCurrent() const
+	{
+		return currentGame;
+	}
 
 public:
 	~GameManager();
 
-public:
-	FORCEINLINE Game* GetCurrent()
-	{
-		return current; 
-	}
-
-public:
-	void Launch(Game* _currentGame);
-
+	virtual void Launch(Game* _currentGame);
 };
-

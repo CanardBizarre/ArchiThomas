@@ -5,15 +5,15 @@
 
 class Duck : public MeshActor
 {
-	float lifeSpan;
 	MovementComponent* movement;
 	AnimationComponent* animation;
 
 public:
-	FORCEINLINE MovementComponent* GetMovement()
+	FORCEINLINE MovementComponent* GetMovement() const
 	{
 		return movement;
 	}
+
 public:
 	Duck(const Vector2f& _size, const string& _path = "", const IntRect& _rect = {});
 	Duck(const Duck& _other);

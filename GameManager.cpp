@@ -2,14 +2,15 @@
 
 GameManager::~GameManager()
 {
-	delete current;
+	delete currentGame;
 }
+
 
 void GameManager::Launch(Game* _currentGame)
 {
-	if (!(current = _currentGame)) return;
-	current->Start();
-	while(!current->Update());
-	current->Stop();
+	if (!(currentGame = _currentGame)) return;
 
+	currentGame->Start();
+	while (!currentGame->Update());
+	currentGame->Stop();
 }

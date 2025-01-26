@@ -8,9 +8,9 @@ ShapeObject::ShapeObject(const float _radius, const string& _path, const IntRect
 	InitCircle(*objectData.data.circleData);
 }
 
-ShapeObject::ShapeObject(const Vector2f& _size, const string& _path, const TextureExtensionType& _textureType, const IntRect& _rect)
+ShapeObject::ShapeObject(const RectangleShapeData& _data)
 {
-	objectData = ShapeObjectData(SOT_RECTANGLE, RectangleShapeData(_size, _path, _textureType, _rect));
+	objectData = ShapeObjectData(SOT_RECTANGLE, _data);
 	InitRectangle(*objectData.data.rectangleData);
 }
 
@@ -44,5 +44,5 @@ void ShapeObject::InitCircle(const CircleShapeData& _data)
 void ShapeObject::InitRectangle(const RectangleShapeData& _data)
 {
 	shape = new RectangleShape(_data.size);
-	M_TEXTURE.Load(this, _data.path, _data.rect, _data.textureType);
+	M_TEXTURE.Load(this, _data.path, _data.rect, _data.textureType, _data.isRepeated);
 }

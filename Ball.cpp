@@ -1,16 +1,14 @@
 #include "Ball.h"
+#include "TimerManager.h"
 
-Ball::Ball(const float _radius) : MeshActor(_radius, 30, "PopCat")
+Ball::Ball(const float _radius) : MeshActor(_radius)
 {
-	physic = CreateComponent<PhysicComponent>(3.0f, Vector2f(0.0f, 1.0f), 200.0f);
+    physic = CreateComponent<PhysicComponent>(40.0f, 0.85f, 0.85f);
+    SetOriginAtMiddle();
 }
 
 Ball::Ball(const Ball& _other) : MeshActor(_other)
 {
-	physic = CreateComponent<PhysicComponent>(3.0f, Vector2f(0.0f, 1.0f), 200.0f);
-}
-
-void Ball::Construct()
-{
-	Super::Construct();
+    physic = CreateComponent<PhysicComponent>(_other.physic);
+    SetOriginAtMiddle();
 }

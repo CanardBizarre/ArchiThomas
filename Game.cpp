@@ -1,31 +1,31 @@
 #include "Game.h"
 #include "ActorManager.h"
-#include "TimerManager.h"
-#include "AudioManager.h"
 #include "CameraManager.h"
-#include "InputManager.h"
+#include "TimerManager.h"
 
 Game::Game()
 {
 	window = RenderWindow();
 }
 
-Game::~Game()
-{
-}
 
 void Game::Start()
 {
-    window.create(VideoMode({800, 800}), "SFML works!");
+    window.create(VideoMode({ 1200, 800 }), "SFML works!");
 };
 
 bool Game::Update()
 {
-	
     TM_Seconds& _timer = M_TIMER;
     _timer.Update();
 
-    M_INPUT.ConsumeData(window);
+    while (const optional _event = window.pollEvent())
+    {
+        if (_event->is<Event::Closed>())
+        {
+            window.close();
+        }
+    }
 
     const float _deltaTime = _timer.GetDeltaTime().asSeconds();
     M_ACTOR.Tick(_deltaTime);
@@ -36,10 +36,9 @@ bool Game::Update()
 void Game::UpdateWindow()
 {
     window.clear();
-    M_CAMERA.RenderAllCamera(window);
+    M_CAMERA.RenderAllCameras(window);
     window.display();
 }
-
 
 void Game::Stop()
 {

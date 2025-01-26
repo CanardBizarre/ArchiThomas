@@ -1,86 +1,82 @@
 #include "PhysicComponent.h"
 #include "Actor.h"
+#include "TimerManager.h"
 
-PhysicComponent::PhysicComponent(Actor* _owner, const float _moveSpeed, const Vector2f _direction, 
-								const float _mass) : Component(_owner)
+PhysicComponent::PhysicComponent(Actor* _owner, const float _mass, const float _restitution, 
+                                const float _friction) : Component(_owner)
 {
-	bounceOffset = Vector2f();
-
-	// Movement
-	canMove = true;
-	moveSpeed = _moveSpeed;
-
-	// Fall
-	mass = _mass;
-	gravity = 9.81f;
-	direction = _direction;
+    canMove = false;
+    velocity = Vector2f();
+    mass = _mass;
+    gravity = 9.81f;
+    restitution = _restitution;
+    friction = _friction;
 }
 
 PhysicComponent::PhysicComponent(Actor* _owner, const PhysicComponent* _other) : Component(_owner)
 {
-	bounceOffset = _other->bounceOffset;
-
-	// Movement
-	canMove = _other->canMove;
-	moveSpeed = _other->moveSpeed;
-
-	// Fall
-	mass = _other->mass;
-	gravity = _other->gravity;
-	direction = _other->direction;
+    canMove = _other->canMove;
+    velocity = _other->velocity;
+    mass = _other->mass;
+    gravity = _other->gravity;
+    restitution = _other->restitution;
+    friction = _other->friction;
 }
 
-Vector2f PhysicComponent::ComputeRebound(const Vector2f& _direction, const Vector2f& _normal, float _restitution)
+void PhysicComponent::BeginPlay()
 {
-	Vector2f _normalizedNormal = _normal.normalized();
-	float _dotProduct = _direction.dot(_normalizedNormal);
-	return _direction - _normalizedNormal * ((1 + _restitution) * _dotProduct);
-}
+    Super::BeginPlay();
 
+    new Timer([&]() { canMove = true; }, seconds(2.0f), true);
+}
 
 void PhysicComponent::Tick(const float _deltaTime)
 {
-	Super::Tick(_deltaTime);
+    Super::Tick(_deltaTime);
 
-	if (canMove)
-	{
+    if (!canMove) return;
+    LOG(Warning, velocity);
+    // Appliquer la gravité
+    velocity.y += gravity * mass * _deltaTime;
 
-		//// Direction
-		//Vector2f _directionOffset = direction * moveSpeed * 100.0f;
+    // Calculer le déplacement
+    const Vector2f& _displacement = velocity * _deltaTime;
 
-		//// Fall
-		//const Vector2f& _downVector = Vector2f(0.0f, 1.0f);
-		//const Vector2f& _fallOffset = _downVector * gravity * mass;
-		//
-		//time += _deltaTime;
-		////bounceOffset *= EaseOutQuart(0.5f);
-
-		//// Result
-		//offset = (_directionOffset + _fallOffset + bounceOffset) * _deltaTime;
-		//fallMovement += _fallOffset * _deltaTime;
-		//
-		//Move(offset);
-
-		Vector2f _directionOffset = direction * moveSpeed * 100.0f;
-		const Vector2f& _fallOffset = Vector2f(0.0f, 1.0f) * gravity * mass;
-		bounceOffset += (_directionOffset + _fallOffset) * _deltaTime;
-		const Vector2f& _offset = bounceOffset * _deltaTime;
-		owner->Move(_offset);
-	}
+    // Mettre à jour la position
+    owner->Move(_displacement);
 }
 
-void PhysicComponent::ApplyBounce()
+void PhysicComponent::ApplyBounce(const Vector2f& _normal)
 {
-	// Bounce
-	const Vector2f _normal = Vector2f(0.0f, -1.0f);
-	owner->Move(Vector2f(_normal) * 0.1f);
-	bounceOffset = ComputeRebound(bounceOffset, _normal, 0.8f);
+    owner->Move(_normal * 0.1f);
+
+    // Calculer la projection de la vitesse sur la normale
+    float _dotProduct = velocity.x * _normal.x + velocity.y * _normal.y;
+
+    // Appliquer le rebond : inverser la composante normale de la vitesse
+    velocity -= 2.0f * _dotProduct * _normal;
+
+    // Réduire la vitesse en fonction du facteur de restitution
+    velocity *= restitution;
+
+    // Appliquer la friction à la composante tangentielle
+    velocity.x *= friction;
+
+    // Éviter de petites oscillations en annulant de faibles valeurs
+    if (abs(velocity.x) < 1.0f)
+    {
+        velocity.x = 0.0f;
+    }
+
+    if (abs(velocity.y) < 1.0f)
+    {
+        velocity.y = 0.0f;
+    }
 }
 
-void PhysicComponent::DEBUG()
+void PhysicComponent::AddForce(const Vector2f& _force)
 {
-	//LOG(Warning, direction);
-	LOG(Error, bounceOffset);
-	//LOG(Display, fallMovement);
-	//LOG(Error, offset);
+    velocity.x += _force.x;
+    velocity.y += _force.y;
 }
+

@@ -26,15 +26,13 @@ public:
 		using Iterator = multimap<string, Actor*>::iterator;
 		const pair<Iterator, Iterator>& _results = actorsID.equal_range(_actorName);
 
-		Iterator _it = _results.first;
-		for (; _it != _results.second; ++_it)
+		for (Iterator _it = _results.first; _it != _results.second; ++_it)
 		{
 			if (_it->second == _actor)
 			{
-				break;
+				actorsID.erase(_it);
 			}
 		}
-		actorsID.erase(_it);
 
 		_actor->BeginDestroy();
 	}

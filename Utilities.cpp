@@ -17,12 +17,12 @@ int GetRandomNumberInRange(const int _min, const int _max)
 
 float DegToRad(const float _degrees)
 {
-    return _degrees * priv::pi / 100.0f;
+    return _degrees * pi / 180.0f;
 }
 
-float RadToDeg(const float _radian)
+float RadToDeg(const float _radians)
 {
-    return  _radian / priv::pi / 100.0f;
+    return 180.0f / pi * _radians;
 }
 
 float Lerp(const float _start, const float _end, const float _time)
@@ -32,7 +32,12 @@ float Lerp(const float _start, const float _end, const float _time)
 
 float Lerp_Constant(const float _start, const float _end, const float _time)
 {
-    return (1 - _time) * _start + _time * _end ;
+    return (1 - _time) * _start + _time * _end;
+}
+
+float DotProduct(const Vector2f& _direction, const Vector2f& _normal)
+{
+    return _direction.x * _normal.x + _direction.y * _normal.y;
 }
 
 float EaseOutQuart(const float _time)
@@ -42,11 +47,5 @@ float EaseOutQuart(const float _time)
 
 float EaseInQuart(const float _time)
 {
-    return powf(_time, 4.0f);
-}
-
-
-float DotProduct(const Vector2f& _direction, const Vector2f& _normal)
-{
-    return _direction.x + _normal.x + _direction.y + _normal.y;
+    return _time * _time * _time * _time;
 }

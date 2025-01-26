@@ -3,36 +3,23 @@
 #include "MeshActor.h"
 #include "MusicSample.h"
 #include "Duck.h"
-
-class MusicSample;
-class CameraActor;
-class Duck;
+#include "Ball.h"
 
 class DuckHuntGame : public Game
 {
 	MeshActor* background;
 	MusicSample* music;
-	CameraActor* camera;
-	Duck* duck;
-	vector<Duck*> duckList;
-	Vector2f center;
-	class CircleActor* circle;
-	float angle;
 
+	// Ball
+	Ball* ball;
+	MeshActor* wall;
+	MeshActor* floor;
 
-	class Ball* ball;
-	class MeshActor* floor;
 public:
 	DuckHuntGame();
-	virtual ~DuckHuntGame();
 
-protected:
+public:
 	virtual void Start() override;
 	virtual bool Update() override;
 	virtual void Stop() override;
-
-public:
-
-	//TODO remove
-	Duck* RetrieveFirstDuck();
 };

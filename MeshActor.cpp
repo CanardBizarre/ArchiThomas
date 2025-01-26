@@ -2,16 +2,15 @@
 #include "CameraManager.h"
 
 MeshActor::MeshActor(const float _radius, const size_t& _pointCount, const string& _path,
-					 const IntRect& _rect, const string& _name, const u_int& _lifeSpand) : Actor(_name, _lifeSpand)
+					 const IntRect& _rect, const string& _name) : Actor(_name)
 {
 	mesh = CreateComponent<MeshComponent>(_radius, _pointCount, _path, _rect);
 	renderMeshToken = -1;
 }
 
-MeshActor::MeshActor(const Vector2f& _size, const string& _path, const TextureExtensionType& _textureType,
-					 const IntRect& _rect, const string& _name, const u_int& _lifeSpand) : Actor(_name, _lifeSpand)
+MeshActor::MeshActor(const RectangleShapeData& _data, const string& _name) : Actor(_name)
 {
-	mesh = CreateComponent<MeshComponent>(_size, _path, _textureType, _rect);
+	mesh = CreateComponent<MeshComponent>(_data);
 	renderMeshToken = -1;
 }
 

@@ -51,6 +51,7 @@
 
 using namespace std;
 using namespace sf;
+using namespace priv;
 
 typedef unsigned short u_short;
 typedef unsigned int u_int;

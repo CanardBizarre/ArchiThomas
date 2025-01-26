@@ -1,23 +1,38 @@
 #include "CameraManager.h"
 
-Camera::CameraManager::CameraManager()
+CameraManager::CameraManager()
 {
-	CreateCamera("Default");
+	onRenderWindow = map<u_int, OnRenderWindow>();
+	allCameras = map<string, CameraActor*>();
+	current = nullptr;
 }
 
-void Camera::CameraManager::RenderAllCamera(RenderWindow& _window)
-{
-	for (const pair<string, CameraActor*>& _cameraPair : allCameras)
-	{
-		_window.setView(*_cameraPair.second->GetView());
 
+void CameraManager::RenderAllCameras(RenderWindow& _window)
+{
+	// pour chaque caméra
+	for (const pair<string, CameraActor*> _pair : allCameras)
+	{
+		// je set sa view
+		_window.setView(*_pair.second->GetView());
+
+		// je draw tous les éléments que je veux
 		for (const pair<u_int, OnRenderWindow>& _renderPair : onRenderWindow)
 		{
 			_renderPair.second(_window);
 		}
-
 	}
-	_window.setView(_window.getDefaultView());
-	
-}
 
+	// Je reset la view
+	_window.setView(_window.getDefaultView());
+
+	// Si je n'ai pas de caméra
+	if (allCameras.empty())
+	{
+		// je draw tous les éléments que je veux
+		for (const pair<u_int, OnRenderWindow>& _renderPair : onRenderWindow)
+		{
+			_renderPair.second(_window);
+		}
+	}
+}

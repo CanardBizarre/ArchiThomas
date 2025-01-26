@@ -1,6 +1,7 @@
 #pragma once
 #include "Actor.h"
 #include "MeshComponent.h"
+#include "TextureManager.h"
 
 class MeshActor : public Actor
 {
@@ -11,6 +12,14 @@ public:
 	FORCEINLINE MeshComponent* GetMesh() const
 	{
 		return mesh;
+	}
+	FORCEINLINE void SetTextureRect(const Vector2i& _start, const Vector2i& _size)
+	{
+		SetTextureRect(IntRect(_start, _size));
+	}
+	FORCEINLINE void SetTextureRect(const IntRect& _rect)
+	{
+		M_TEXTURE.SetTextureRect(mesh->GetShape()->GetDrawable(), _rect);
 	}
 
 	#pragma region Modifier
@@ -59,15 +68,16 @@ public:
 
 public:
 	MeshActor() = default;
-	MeshActor(const float _radius, const size_t& _pointCount = 30, const string& _path = "",
-			  const IntRect& _rect = {}, const string& _name = "MeshActor", const u_int& _lifeSpand = 0);
-	MeshActor(const Vector2f& _size, const string& _path = "", const TextureExtensionType& _textureType = PNG,
-			  const IntRect& _rect = {}, const string& _name = "MeshActor", const u_int& _lifeSpand = 0);
+	MeshActor(const float _radius, const size_t& _pointCount = 30, const string& _path = "", const IntRect& _rect = {}, const string& _name = "MeshActor");
+	MeshActor(const RectangleShapeData& _data, const string& _name = "MeshActor");
 	MeshActor(const MeshActor& _other);
 
-	virtual void Construct() override;
-	virtual void Deconstruct() override;
+	
 
 private:
 	void RenderMesh(RenderWindow& _window);
+
+public:
+	virtual void Construct() override;
+	virtual void Deconstruct() override;
 };

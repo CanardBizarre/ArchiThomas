@@ -13,13 +13,12 @@ public:
 	}
 
 public:
-	 Game();
-	 virtual ~Game();
+	Game();
+	virtual ~Game() {};
+
 public:
 	virtual void Start();
 	virtual bool Update();
-	virtual void Stop();
-
 	void UpdateWindow();
-
+	virtual void Stop();
 };
