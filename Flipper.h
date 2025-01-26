@@ -4,7 +4,7 @@
 
 class Flipper : public MeshActor
 {
-	MovementComponent* movement;
+	//MovementComponent* movement;
 
 public:
 	Flipper(const Vector2f& _size, const string& _path = "", const IntRect& _rect = {});

@@ -14,7 +14,8 @@ class PinballGame : public Game
 	//Flipper droit + gauche
 	vector<Flipper*> flippers;
 	//Les bounds contre lesquels se cogner
-	//vector<Bounds> bounds;
+	vector<MeshActor*> bounds;
+	vector<MeshActor*> walls;
 
 public:
 	PinballGame();
