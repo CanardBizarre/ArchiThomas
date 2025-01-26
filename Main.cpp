@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "DuckHuntGame.h"
+#include "PinballGame.h"
 #include "GameManager.h"
 
 void InitConfig()
@@ -12,7 +12,7 @@ int main()
 {
     InitConfig();
     
-   M_GAME.Launch(new DuckHuntGame());
+   M_GAME.Launch(new PinballGame());
 
 
 	return EXIT_SUCCESS;

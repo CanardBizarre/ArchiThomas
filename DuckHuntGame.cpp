@@ -50,7 +50,8 @@ bool DuckHuntGame::Update()
 	
 	if (_ballRect.findIntersection(_floorRect))
 	{
-		ball->ApplyBounce();
+		const Vector2f& _normal = Vector2f(0.0f, -1.0f);
+		ball->GetPhysic()->ApplyBounce(_normal);
 	}
 	
 	return IsOver();

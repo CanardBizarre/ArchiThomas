@@ -47,8 +47,8 @@ namespace MyInput
 
         void BindAction(const vector<Code>& _codes, const function<void()>& _callback);
         void BindAction(const Code& _codes, const function<void()>& _callback);
-	};
+        void BindActionWithState(const Code& _codes, const function<void(bool)>& _callback, bool _state);
+
+    };
 }
 using namespace MyInput;
-
-

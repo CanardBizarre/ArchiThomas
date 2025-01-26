@@ -16,7 +16,7 @@ Game::~Game()
 
 void Game::Start()
 {
-    window.create(VideoMode({800, 800}), "SFML works!");
+    window.create(VideoMode({350, 700}), "Pinball from Wish/Temu");
 };
 
 bool Game::Update()
@@ -45,3 +45,5 @@ void Game::Stop()
 {
     M_ACTOR.BeginDestroy();
 }
+
+

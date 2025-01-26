@@ -59,5 +59,6 @@ public:
 
 public:
 	TextObject(const string& _text, const string& _path = "", const FontExtensionType& _fontType = OTF);
+	TextObject(const TextObject& _other);
 	~TextObject();
 };
