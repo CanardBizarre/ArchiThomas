@@ -46,7 +46,7 @@ public:
 			_actor->SetOriginAtMiddle();
 		}
 		_actor->SetPosition(_position);
-		_actor->ComputeInitCoords();
+		_actor->InitCoords();
 		if (_rotation != 0.0f)
 		{
 			_actor->Rotate(degrees(_rotation));

@@ -132,6 +132,10 @@ void PinballGame::Start()
             }
         }, seconds(120), true, true);
 
+    CameraActor* _cam = new CameraActor({500, 500}, {1000, 1000});
+    M_CAMERA.Register(_cam);
+    M_CAMERA.SetCurrent(_cam);
+
     GenerateActors();
 }
 bool PinballGame::Update()

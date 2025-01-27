@@ -67,8 +67,6 @@ namespace Camera
 		void RenderAllCamera(RenderWindow& _window);
 
 	};
-
-
 }
 
 using namespace Camera;
