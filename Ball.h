@@ -1,12 +1,12 @@
 #pragma once
 #include "MeshActor.h"
-#include "KinecticComponent.h"
+#include "KinematicsComponent.h"
 class Ball : public MeshActor
 {
-	KinecticComponent* movement;
+	KinematicsComponent* movement;
 
 public:
-	FORCEINLINE KinecticComponent* GetMovement()
+	FORCEINLINE KinematicsComponent* GetMovement()
 	{
 		return movement;
 	}

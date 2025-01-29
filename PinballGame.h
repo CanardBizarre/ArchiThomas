@@ -3,7 +3,7 @@
 class PinballGame : public Game
 {
 	class Ball* ball;
-	class RectangleActor* rectangle;
+	class KinematicTrayActor* trajectorie;
 
 public:
 	PinballGame();

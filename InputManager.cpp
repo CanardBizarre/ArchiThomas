@@ -21,7 +21,7 @@ void  MyInput::InputManager::ConsumeData(RenderWindow& _window)
 
         else if (const Event::MouseMoved* _mouse = _event->getIf<Event::MouseMoved>())
         {
-            LOG(Warning, "Mouse pos X:" + to_string(_mouse->position.x) + " Y:" + to_string(_mouse->position.y));
+           
         }
     }
 }

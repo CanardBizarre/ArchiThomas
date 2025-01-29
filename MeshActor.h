@@ -1,40 +1,62 @@
 #pragma once
 #include "Actor.h"
 #include "MeshComponent.h"
-enum Corner
-{
-	RIGHTDOWNCORNER,
-	RIGHTUPCORNER,
-	LEFTDOWNCORNER,
-	LEFTUPCORNER,
-
-};
+#include "TextureManager.h"
 
 class MeshActor : public Actor
 {
 	MeshComponent* mesh;
 	u_int renderMeshToken;
-	Vector2f size;
-	map<Corner, Vector2f> coordinatesOfCorner;
-
 
 public:
+	FORCEINLINE Vector2f GetForwardVector() const
+	{
+		const Angle& _angle = GetRotation();
+		const float _radians = _angle.asRadians();
+		return Vector2f(cos(_radians), sin(_radians));
+	}
+	FORCEINLINE Vector2f GetDownVector() const
+	{
+		const Angle& _angle = GetRotation();
+		const float _radians = _angle.asRadians();
+		return Vector2f(sin(_radians), -cos(_radians));
+	}
+	FORCEINLINE Vector2f GetRightVector() const
+	{
+		const Angle& _angle = GetRotation();
+		const float _radians = _angle.asRadians();
+		return Vector2f(cos(_radians), -sin(_radians));
+	}
+	FORCEINLINE Vector2f GetLeftVector() const
+	{
+		const Angle& _angle = GetRotation();
+		const float _radians = _angle.asRadians();
+		return Vector2f(-cos(_radians), sin(_radians));
+	}
+	FORCEINLINE Vector2f GetBackVector() const
+	{
+		const Angle& _angle = GetRotation();
+		const float _radians = _angle.asRadians();
+		return Vector2f(-cos(_radians), -sin(_radians));
+	}
 	FORCEINLINE MeshComponent* GetMesh() const
 	{
 		return mesh;
 	}
-
-	FORCEINLINE Vector2f GetSize() const 
+	FORCEINLINE FloatRect GetHitbox() const
 	{
-		return size;
+		return mesh->GetShape()->GetDrawable()->getGlobalBounds();
+	}
+	FORCEINLINE void SetTextureRect(const Vector2i& _start, const Vector2i& _size)
+	{
+		SetTextureRect(IntRect(_start, _size));
+	}
+	FORCEINLINE void SetTextureRect(const IntRect& _rect)
+	{
+		M_TEXTURE.SetTextureRect(mesh->GetShape()->GetDrawable(), _rect);
 	}
 
-	FORCEINLINE map<Corner, Vector2f> GetCoordinateOfCorner() const
-	{
-		return coordinatesOfCorner;
-	}
-
-	#pragma region Modifier
+#pragma region Modifier
 
 	FORCEINLINE virtual void SetPosition(const Vector2f& _position) override
 	{
@@ -68,9 +90,7 @@ public:
 	FORCEINLINE virtual void Rotate(const Angle& _angle) override
 	{
 		Super::Rotate(_angle);
-		LOG(Warning, to_string(_angle.asRadians()));
 		mesh->GetShape()->Rotate(_angle);
-		RotateAllCoords(_angle);
 	}
 	FORCEINLINE virtual void Scale(const Vector2f& _factor) override
 	{
@@ -78,104 +98,18 @@ public:
 		mesh->GetShape()->Scale(_factor);
 	}
 
-	FORCEINLINE Vector2f ComputeOppositeCornerCoordinate(const Vector2f& _coordinate)
-	{
-		const float _width = GetPosition().x;
-		const float _length = GetPosition().y;
-		const Vector2f& _coordsRoatated = _coordinate.rotatedBy(degrees(180.0f));
-
-		return Vector2(_coordsRoatated.x + _width * 2.0f,
-			_coordsRoatated.y + _length * 2.0f);
-	}
-
-	FORCEINLINE Vector2f ComputeRotatedCoordinate(const Vector2f& _coordinate, float _degrees)
-	{
-		const float _xOrigin = GetPosition().x;
-		const float _yOrigin = GetPosition().y;
-		const float _xCoordinate = _coordinate.x;
-		const float _yCoordinate = _coordinate.y;
-
-		// Convertir les degrés en radians
-		const float _rad = DegToRad(_degrees);
-
-		// Calculer le cos et sin de l'angle
-		const float _cos = cos(_rad);
-		const float _sin = sin(_rad);
-
-		// Appliquer la rotation
-		const float _newX = (_xCoordinate - _xOrigin) * _cos - (_yCoordinate - _yOrigin) * _sin + _xOrigin;
-		const float _newY = (_xCoordinate - _xOrigin) * _sin + (_yCoordinate - _yOrigin) * _cos + _yOrigin;
-
-		return { _newX, _newY };
-	}
-
-
-	FORCEINLINE Vector2f ComputeOrigineToCoordE()
-	{
-		const float _halfLength = size.x / 2.0f;
-		const Vector2f& _origin = {GetPosition().x, GetPosition().y};
-		return Vector2f(_origin.x + _halfLength, _origin.y);
-	}
-
-	FORCEINLINE void ComputeCoord(const Vector2f _oe)
-	{
-		const float _width = size.y;
-		Vector2f _rightDownCorner = Vector2f(_oe.x, _oe.y + _width / 2.0f);
-		Vector2f _righUpCorner = Vector2f(_oe.x, _oe.y - _width / 2.0f);
-		
-		coordinatesOfCorner.insert(make_pair(RIGHTDOWNCORNER, _rightDownCorner));
-		coordinatesOfCorner.insert(make_pair(RIGHTUPCORNER, _righUpCorner));
-		coordinatesOfCorner.insert(make_pair(LEFTDOWNCORNER, ComputeOppositeCornerCoordinate(_righUpCorner)));
-		coordinatesOfCorner.insert(make_pair(LEFTUPCORNER, ComputeOppositeCornerCoordinate(_rightDownCorner)));
-		LogCoordinate();
-	}
-
-	FORCEINLINE map<Corner, Vector2f>  InitCoords()
-	{
-		const Vector2f& _oE = ComputeOrigineToCoordE();
-		ComputeCoord(_oE);
-		return coordinatesOfCorner;
-	}
-
-	FORCEINLINE void LogCoordinate()
-	{
-		LOG(Warning, "A coords is x: " + to_string(coordinatesOfCorner[RIGHTDOWNCORNER].x) + "y: " + to_string(coordinatesOfCorner[RIGHTDOWNCORNER].y));
-		LOG(Warning, "b coords is x: " + to_string(coordinatesOfCorner[LEFTDOWNCORNER].x) + "y: " + to_string(coordinatesOfCorner[LEFTDOWNCORNER].y));
-		LOG(Warning, "c coords is x: " + to_string(coordinatesOfCorner[LEFTUPCORNER].x) + "y: " + to_string(coordinatesOfCorner[LEFTUPCORNER].y));
-		LOG(Warning, "d coords is x: " + to_string(coordinatesOfCorner[RIGHTUPCORNER].x) + "y: " + to_string(coordinatesOfCorner[RIGHTUPCORNER].y));
-	}
-
-	FORCEINLINE map<Corner, Vector2f> RotateAllCoords(const Angle& _radian)
-	{
-		const float _degrees = RadToDeg(_radian);
-
-		return RotateAllCoords(_degrees);
-	}
-
-	FORCEINLINE map<Corner, Vector2f> RotateAllCoords(const float _angle)
-	{
-		for (pair<Corner, Vector2f> _pair  : coordinatesOfCorner)
-		{
-			const Vector2f& _newcoordinate = ComputeRotatedCoordinate(_pair.second, _angle);
-			coordinatesOfCorner[_pair.first] = _newcoordinate;
-		}
-		LogCoordinate();
-		return coordinatesOfCorner;
-	}
-
-	#pragma endregion
+#pragma endregion
 
 public:
 	MeshActor() = default;
-	MeshActor(const float _radius, const size_t& _pointCount = 30, const string& _path = "",
-			  const IntRect& _rect = {}, const string& _name = "MeshActor", const u_int& _lifeSpand = 0);
-	MeshActor(const Vector2f& _size, const string& _path = "", const TextureExtensionType& _textureType = PNG,
-			  const IntRect& _rect = {}, const string& _name = "MeshActor", const u_int& _lifeSpand = 0);
+	MeshActor(const float _radius, const size_t& _pointCount = 30, const string& _path = "", const IntRect& _rect = {}, const string& _name = "MeshActor");
+	MeshActor(const RectangleShapeData& _data, const string& _name = "MeshActor");
 	MeshActor(const MeshActor& _other);
 
+protected:
+	virtual void RenderMesh(RenderWindow& _window);
+
+public:
 	virtual void Construct() override;
 	virtual void Deconstruct() override;
-
-private:
-	void RenderMesh(RenderWindow& _window);
 };

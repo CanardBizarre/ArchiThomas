@@ -24,7 +24,7 @@ struct CircleShapeData
 	size_t pointCount;
 
 	CircleShapeData(const float _radius, const string& _path, const IntRect& _rect,
-					const size_t& _pointCount)
+		const size_t& _pointCount)
 	{
 		radius = _radius;
 		path = _path;
@@ -49,13 +49,16 @@ struct RectangleShapeData
 	string path;
 	IntRect rect;
 	TextureExtensionType textureType;
+	bool isRepeated;
 
-	RectangleShapeData(const Vector2f& _size, const string& _path, const TextureExtensionType& _textureType, const IntRect& _rect)
+	RectangleShapeData(const Vector2f& _size, const string& _path = "", const TextureExtensionType& _textureType = PNG,
+		const bool _isRepeated = false, const IntRect& _rect = IntRect())
 	{
 		size = _size;
 		path = _path;
 		rect = _rect;
 		textureType = _textureType;
+		isRepeated = _isRepeated;
 	}
 };
 
@@ -72,16 +75,6 @@ struct ShapeObjectData
 {
 	ShapeObjectType type;
 	ObjectData data;
-
-
-	FORCEINLINE RectangleShapeData* GetRectangleData() 
-	{
-		return data.rectangleData;
-	}
-	FORCEINLINE CircleShapeData* GetCircleData()
-	{
-		return data.circleData;
-	}
 
 	ShapeObjectData()
 	{
@@ -181,8 +174,8 @@ public:
 
 public:
 	ShapeObject(const float _radius, const string& _path = "", const IntRect& _rect = IntRect(),
-				const size_t& _pointCount = 30); // Circle
-	ShapeObject(const Vector2f& _size, const string& _path = "", const TextureExtensionType& _textureType = PNG, const IntRect& _rect = IntRect()); // Rectangle
+		const size_t& _pointCount = 30); // Circle
+	ShapeObject(const RectangleShapeData& _data); // Rectangle
 	ShapeObject(const ShapeObject& _other);
 	~ShapeObject();
 

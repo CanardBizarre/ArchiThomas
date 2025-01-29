@@ -3,12 +3,12 @@
 
 Ball::Ball(const float _radius) : MeshActor(_radius, 30, "PopCat")
 {
-	movement = CreateComponent<KinecticComponent>();
+	movement = CreateComponent<KinematicsComponent>();
 }
 
 Ball::Ball(const Ball& _other) : MeshActor(_other)
 {
-	movement = CreateComponent<KinecticComponent>(_other.movement);
+	movement = CreateComponent<KinematicsComponent>(_other.movement);
 }
 
 

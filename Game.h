@@ -11,6 +11,10 @@ public:
 	{
 		return window.getSize();
 	}
+	FORCEINLINE RenderWindow& GetRenderWindow()
+	{
+		return window;
+	}
 public:
 	FORCEINLINE virtual bool IsOver() const
 	{

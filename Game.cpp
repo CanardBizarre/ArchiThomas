@@ -5,6 +5,8 @@
 #include "CameraManager.h"
 #include "InputManager.h"
 
+using namespace Camera;
+
 Game::Game()
 {
 	window = RenderWindow();
@@ -17,6 +19,7 @@ Game::~Game()
 void Game::Start()
 {
     window.create(VideoMode({1000, 1000}), "SFML works!");
+    M_CAMERA.CreateCamera("DefaultCamera");
 };
 
 bool Game::Update()
@@ -34,7 +37,7 @@ bool Game::Update()
 void Game::UpdateWindow()
 {
     window.clear();
-    M_CAMERA.RenderAllCamera(window);
+    M_CAMERA.RenderAllCameras(window);
     window.display();
 }
 

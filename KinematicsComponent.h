@@ -1,6 +1,6 @@
 #pragma once
 #include "MovementComponent.h"
-class KinecticComponent :  public MovementComponent
+class KinematicsComponent :  public MovementComponent
 {
 	float angle;
 	float power;
@@ -19,15 +19,20 @@ public:
 	{
 		power = _power;
 	}
+	FORCEINLINE void ResetTimer()
+	{
+		time = 0;
+	}
 
 public:
-	KinecticComponent(Actor* _owner);
-	KinecticComponent(Actor* _owner, KinecticComponent* _other);
+	KinematicsComponent(Actor* _owner, const float _angle = 0.0f, const float _power = 0.0f);
+
+	KinematicsComponent(Actor* _owner, KinematicsComponent* _other);
 
 public:
 	void Lauch();
 	virtual void Move(const float _delta) override;
-
+	Vector2f ComputeNewCoordinate(const float _delta);
 
 };
 
